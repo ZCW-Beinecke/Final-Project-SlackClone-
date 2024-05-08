@@ -53,7 +53,7 @@ public class AuthenticateController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/authenticate")
-    public ResponseEntity<JWTToken> authorize(@RequestBody LoginVM loginVM) {
+    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
             loginVM.getUsername(),
             loginVM.getPassword()

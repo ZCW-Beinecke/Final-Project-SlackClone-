@@ -23,5 +23,5 @@ export default Home;
 const HomeContainer = styled.div`
   width: 100%;
   height: 50%;
-  background: turquoise;
+  background: turquios;
 `;
