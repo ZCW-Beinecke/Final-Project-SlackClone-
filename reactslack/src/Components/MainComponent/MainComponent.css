@@ -104,26 +104,26 @@
       width: 90%;
     }
 
-    .sidebar {
-      flex: 1;
-      background-color: #3e3c61;
-      position: relative;
+    /*    .sidebar {*/
+    /*      flex: 1;*/
+    /*      background-color: #3e3c61;*/
+    /*      position: relative;*/
 
-      .navbar {
-        display: flex;
-        align-items: center;
-        background-color: #2f2d52;
-        height: 50px;
-        padding: 10px;
-        justify-content: space-between;
-        color: aliceblue;
+    .navbar {
+      display: flex;
+      align-items: center;
+      background-color: #2f2d52;
+      height: 50px;
+      padding: 10px;
+      justify-content: space-between;
+      color: aliceblue;
 
-        .logo {
-          font-weight: bold;
-          @include tablet {
-            display: none;
-          }
+      .logo {
+        font-weight: bold;
+        @include tablet {
+          display: none;
         }
+        /*        }*/
 
         .user {
           display: flex;

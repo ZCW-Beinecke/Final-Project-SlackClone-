@@ -5,8 +5,6 @@ const Sidebar = () => {
   // Dummy data for channels (replace with actual data)
   const [channels, setChannels] = useState([
     { id: 1, name: 'General' },
-    { id: 2, name: 'Random' },
-    { id: 3, name: 'Tech Talk' }
   ]);
 
   const [privateChats, setPrivateChats] = useState([]);
@@ -87,7 +85,7 @@ const Sidebar = () => {
 
         <input
           type="text"
-          placeholder="Enter direct message name"
+          placeholder="Enter direct message"
           value={newPrivateChatName}
           onChange={(e) => setNewPrivateChatName(e.target.value)}
         />

@@ -36,7 +36,7 @@ const PrivateChat = () => {
       <div className="add-channel">
         <input
           type="text"
-          placeholder="Enter direct message name"
+          placeholder="Enter direct message"
           value={newPrivateChatName}
           onChange={(e) => setNewPrivateChatName(e.target.value)}
         />
