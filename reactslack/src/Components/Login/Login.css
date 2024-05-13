@@ -10,8 +10,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: white;
-  /* url('../../Components/Assets/background.jpg') */
+  background: url('../../Components/Assets/background.jpg');
 }
 
 .wrapper {

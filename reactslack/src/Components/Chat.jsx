@@ -94,16 +94,16 @@ const sendMessage = () => {
           <FaUserPlus />
         </div>
       </div>
-      
+      // Render the messages component with the messages array.
       <Messages messages={messages} />
       <div className="input">
         <input
-          placeholder="Channel Number..."
+          placeholder="Room Number..."
           onChange={event => {
             setRoom(event.target.value);
           }}
         />
-        <button onClick={joinRoom}>Join Channels</button>
+        <button onClick={joinRoom}>Join Room</button>
         <input
           type="text"
           placeholder="Type something"

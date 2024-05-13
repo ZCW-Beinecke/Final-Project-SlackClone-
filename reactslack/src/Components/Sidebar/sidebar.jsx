@@ -5,8 +5,6 @@ const Sidebar = () => {
   // Dummy data for channels (replace with actual data)
   const [channels, setChannels] = useState([
     { id: 1, name: 'General' },
-    { id: 2, name: 'Announcements' },
-    { id: 3, name: 'Rules' },
   ]);
 
   const [privateChats, setPrivateChats] = useState([]);
@@ -50,7 +48,7 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar">
-      <h1>TableTalk</h1>
+      <h1>RubberMan 10.0</h1>
       <h2>Channels</h2>
       <ul>
         {/* Render list of channels */}
