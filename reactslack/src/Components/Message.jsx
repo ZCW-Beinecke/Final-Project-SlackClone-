@@ -1,3 +1,17 @@
+
+import React from 'react';
+import Jane from './Assets/Chris.jpg';
+
+const Message = ({ msg }) => {
+  return (
+    <div className="message">
+      <div className="messageInfo">
+        <img src={Jane} alt="" />
+        <span>just now</span>
+      </div>
+      <div className="messageContent">
+        <p>{msg}</p>
+
 import React, { useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 import { FaImage, FaCloudUploadAlt } from 'react-icons/fa';
@@ -88,8 +102,10 @@ const Message = () => {
           }}
         />
         <button onClick={sendMessage}>Send Message</button>
+
       </div>
     </div>
   );
 };
+
 export default Message;

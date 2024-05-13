@@ -36,7 +36,7 @@ public class Channel implements Serializable {
     @JsonIgnoreProperties(value = { "channels", "members" }, allowSetters = true)
     private Workspace workspace;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "channel")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "channel")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "channel", "userProfile", "mentions" }, allowSetters = true)
     private Set<Message> messages = new HashSet<>();

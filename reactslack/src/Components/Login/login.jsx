@@ -29,7 +29,7 @@ const Login = () => {
 //       loginLink(curUsername, curPassword);
 //     }
 
-    const handleLogin = (event) => {
+const handleLogin = (event) => {
     event.preventDefault();
     const username = event.target.elements.username.value;
     const password = event.target.elements.password.value;
@@ -38,7 +38,10 @@ const Login = () => {
     console.log(`Username: ${username}`);
     console.log(`Password: ${password}`);
     loginLink(username, password);
-    }
+    // Store the authenticated username in localStorage
+    localStorage.setItem('authenticatedUsername', username);
+};
+
 
 
     const loginLink = (username , password) => {
@@ -137,6 +140,7 @@ const Login = () => {
 
 
     return (
+        
         <div className={`wrapper${loginAction}`}>
             <div className="form-box login">
                 <form action="" onSubmit={handleLogin}>
@@ -173,6 +177,7 @@ const Login = () => {
                     </div>
                 </form>
             </div>
+            
 
             <div className={`form-box register${registerAction}`}>
                 <form onSubmit={handleRegisterSubmit}>

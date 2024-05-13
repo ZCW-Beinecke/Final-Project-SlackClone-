@@ -1,16 +1,20 @@
-import React from "react";
-import Message from "./Message";
-import Sidebar from "./Sidebar/sidebar";
-import RightSidebar from "./RightSidebar/RightSidebar";
-import Header from "./Header"
+import React from 'react';
+import Message from './Message';
 
-const Messages = () => {
+
+const Messages = ({ messages }) => {
+  // If there are no messages, display a message
+  if (!messages || messages.length === 0) {
+    return <p>Start conversation here!</p>;
+  }
+
   return (
+    // Loop through the messages and display them
     <div className="messages">
-
-      <Message />
-      <Sidebar />
-      <RightSidebar />
+      {messages.map((msg, index) => (
+        // Pass the message
+        <Message key={index} msg={msg} />
+      ))}
     </div>
   );
 };

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-//import { connect } from "react-redux";
 import { Link } from "react-router-dom"; 
 import { setChannel } from "./../../store/actioncreator";
-import { Notification } from "./Notification/notification";
+//import { Notification } from "./Notification/notification";
 import "./Channels.css";
 import { Menu, Icon, Modal, Button, Form, Segment, Checkbox } from "semantic-ui-react";
 

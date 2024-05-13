@@ -1,7 +1,7 @@
 import React from 'react';
 import profileImage from './Assets/profile.jpg';
 
-const Navbar = () => {
+const Header = () => {
   return (
     <div className="navbar">
       <span className="logo">Table Talk</span>
@@ -14,4 +14,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default Header;
