@@ -2,7 +2,7 @@ import React from 'react';
 import Chat from '../Chat';
 import './MainComponent.css';
 import SideBar from '../Sidebar/sidebar.jsx';
-import RightSideBar from '../RightSidebar/RightSidebar.js';
+import RightSideBar from '../RightSidebar/RightSidebar.jsx';
 
 const home = () => {
   return (

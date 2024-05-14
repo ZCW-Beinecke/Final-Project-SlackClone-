@@ -1,85 +1,91 @@
-/* .rightsidebar {
-    background-color: #060b26;
-    height: 80px;
-    display: flex;
-    justify-content: start;
-    align-items: right;
-}
-
-.menu-bars {
-    margin-right: 2rem;
-    font-size: 2rem;
-    background: none;
-}
-
-.nav-menu {
-    background-color: #060b26;
-    width: 250px;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    transition: 850ms;
-}
-
-.nav-menu.active {
-    left: 0;
-    transition: 350ms;
-}
-
-.nav-text{
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 8px 0px 8px 16px;
-    list-style: none;
-    height: 60px;
-}
-.nav-text a {
-    text-decoration: none;
-    color: #f5f5f5;
-    font-size: 18px;
-    width: 95%;
-    height: 100%;
-    display: flex;
-    align-items: right;
-    padding: 0 16px;
-    border-radius: 4px;
-}
-
-.nav-text a:hover {
-    background-color: #1a83ff;
-} */
-.right-sidebar {
-  /* Style your right sidebar here */
-  background-color: #72d5e2;
-  padding: 1rem;
-  border-left: 1px solid #fff;
+.right-side-bar {
   width: 250px;
-  height: 100vh;
+  background-color: #72d5e2;
+  padding: 20px;
+  border: 1px solid #fff; /* Set a white border for all sides */
   position: fixed;
   right: 0;
   top: 0;
+  bottom: 0;
+  overflow-y: auto; /* Allow scrolling if content exceeds viewport height */
+  color: #fff; /* Set default font color to white */
 }
 
-.right-sidebar h2 {
-  /* Style the heading here */
-  margin-bottom: 1rem;
-  color: white;
+.right-side-bar h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
 }
 
-.right-sidebar ul {
-  /* Style the unordered list here */
-  list-style: none;
+.right-side-bar ul {
+  list-style-type: none;
   padding: 0;
-  color: white;
 }
 
-.right-sidebar li {
-  /* Style the list items here */
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-  color: white;
+.right-side-bar ul li {
+  margin-bottom: 10px;
 }
+
+.add-channel {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.add-channel input {
+  margin-right: 10px;
+}
+
+.add-channel button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.add-channel button:hover {
+  background-color: #0056b3;
+}
+
+/* Delete button style */
+.right-side-bar ul li button,
+.add-channel button {
+  background-color: #2b1996;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.right-side-bar ul li button:hover,
+.add-channel button:hover {
+  background-color: #2b1996;
+}
+
+.right-side-bar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.right-side-bar ul li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  font-weight: normal; /* Reset font weight to normal for all list items */
+}
+
+.right-side-bar ul li.active {
+  font-weight: bold; /* Set font weight to bold for active tab */
+}
+.profile-placeholder {
+  text-decoration: underline;
+}
+
+/* Channel link style (assuming no links in RightSidebar currently) */
+/*.right-side-bar ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.right-side-bar ul li a:hover {
+  text-decoration: underline;
+}*/

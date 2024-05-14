@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { setChannel } from "./../../store/actioncreator";
 import { Notification } from "./Notification/notification";
 import "./Channels.css";
+import './Sidebar/sidebar';
 import { Menu, Icon, Modal, Button, Form, Segment, Checkbox } from "semantic-ui-react";
 
 const Channels = (props) => {
@@ -231,5 +232,9 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
+
+export default (mapStateToProps, mapDispatchToProps)(Channels);
+
 export default connect(mapStateToProps, mapDispatchToProps)(Channels);
 //ethan
+

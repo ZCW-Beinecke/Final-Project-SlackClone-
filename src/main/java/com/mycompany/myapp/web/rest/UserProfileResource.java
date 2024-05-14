@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.domain.UserProfile;
 import com.mycompany.myapp.repository.UserProfileRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
@@ -189,4 +190,12 @@ public class UserProfileResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+    //I created this
+    //    @GetMapping("/{user}")
+    //    public ResponseEntity<UserProfile> getUserProfileByUser(@RequestBody User user) {
+    //
+    //        log.debug("REST request to get UserProfile : {}", user);
+    //        Optional<UserProfile> userProfile = userProfileRepository.findOneWithEagerRelationshipsByUser(user);
+    //        return ResponseUtil.wrapOrNotFound(userProfile);
+    //    }
 }

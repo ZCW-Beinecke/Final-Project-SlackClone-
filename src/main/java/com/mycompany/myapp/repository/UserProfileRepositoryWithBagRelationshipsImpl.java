@@ -88,4 +88,20 @@ public class UserProfileRepositoryWithBagRelationshipsImpl implements UserProfil
         Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
         return result;
     }
+    //I created this
+    //    @Override
+    //    public Optional<UserProfile> fetchBagRelationshipsByUser(Optional<UserProfile> userProfile) {
+    //        return userProfile.flatMap(userProfile -> {
+    //            return Optional.ofNullable(userProfileRepository.findByUser(userProfile.getUser()));
+    //        });
+    //    }
+
+    //    public UserProfile<UserProfile> grabUser(UserProfile userProfile) {
+    //        for (int i = 0; i < userProfileRepository.findAll(); i++) {
+    //            if(userProfile.equals(i))
+    //                return userProfile;
+    //        }
+    //        return null;
+    //    }
+
 }

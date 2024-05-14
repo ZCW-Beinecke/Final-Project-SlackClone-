@@ -14,7 +14,7 @@ body {
 }
 
 .wrapper {
-  position: relative;
+  position: center;
   width: 420px;
   height: 480px;
   background: transparent;
@@ -36,11 +36,13 @@ body {
 .wrapper .form-box {
   width: 100%;
   padding: 40px;
+  align-items: center;
 }
 
 .wrapper .form-box.login {
   transition: translate 0.18s ease;
   translate: 0;
+  align-items: center;
 }
 
 .wrapper.active .form-box.login {

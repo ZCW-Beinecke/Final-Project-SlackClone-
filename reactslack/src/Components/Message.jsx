@@ -1,7 +1,7 @@
 import React from 'react';
 import Jane from './Assets/Chris.jpg';
 import './message.css';
-
+//hi
 const Message = ({ msg }) => {
   console.log(msg);
   return (
