@@ -3,6 +3,7 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.domain.UserProfile;
 import com.mycompany.myapp.repository.UserProfileRepository;
+import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +35,11 @@ public class UserProfileResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
+    private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
 
-    public UserProfileResource(UserProfileRepository userProfileRepository) {
+    public UserProfileResource(UserRepository userRepository, UserProfileRepository userProfileRepository) {
+        this.userRepository = userRepository;
         this.userProfileRepository = userProfileRepository;
     }
 
@@ -190,12 +194,16 @@ public class UserProfileResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
-    //I created this
-    //    @GetMapping("/{user}")
-    //    public ResponseEntity<UserProfile> getUserProfileByUser(@RequestBody User user) {
-    //
-    //        log.debug("REST request to get UserProfile : {}", user);
-    //        Optional<UserProfile> userProfile = userProfileRepository.findOneWithEagerRelationshipsByUser(user);
-    //        return ResponseUtil.wrapOrNotFound(userProfile);
-    //    }
+
+    //    I created this
+    @GetMapping("/user/{name}")
+    public ResponseEntity<UserProfile> getUserProfileByUser(@PathVariable String name) {
+        Optional<User> userFetched = userRepository.findOneByLogin(name);
+        if (userFetched.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        log.debug("REST request to get UserProfile from User : {}", userFetched.get());
+        Optional<UserProfile> userProfile = userProfileRepository.findOneWithEagerRelationshipsByUser(userFetched.get());
+        return ResponseUtil.wrapOrNotFound(userProfile);
+    }
 }

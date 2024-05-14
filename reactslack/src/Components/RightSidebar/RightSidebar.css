@@ -72,6 +72,24 @@
   cursor: pointer;
   font-weight: normal; /* Reset font weight to normal for all list items */
 }
+.right-sidebar-tabs {
+  border-bottom: 1px solid #fff; /* Add a thin white horizontal line below the tabs */
+}
+
+.right-sidebar-tabs li {
+  font-size: 20px; /* Set the font size to 20px */
+  display: inline-block;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.right-sidebar-tabs li.active {
+  font-weight: bold; /* Set font weight to bold for active tab */
+}
+
+.right-sidebar-tabs li:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Light white background on hover */
+}
 
 .right-side-bar ul li.active {
   font-weight: bold; /* Set font weight to bold for active tab */

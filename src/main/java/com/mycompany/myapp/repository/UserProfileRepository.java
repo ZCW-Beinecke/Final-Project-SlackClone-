@@ -41,11 +41,18 @@ public interface UserProfileRepository extends UserProfileRepositoryWithBagRelat
 
     @Query("select userProfile from UserProfile userProfile left join fetch userProfile.user where userProfile.id =:id")
     Optional<UserProfile> findOneWithToOneRelationships(@Param("id") Long id);
-    //I created this
-    //    @Query("select userProfile from UserProfile userProfile left join fetch userProfile.user where userProfile.user =:user")
-    //    Optional<UserProfile> findOneWithToOneRelationshipsByUser(@Param("user") String user);
 
-    //    default Optional<UserProfile> findOneWithEagerRelationshipsByUser(User user) {
-    //        return this.fetchBagRelationshipsByUser(this.findOneWithToOneRelationshipsByUser(user));
-    //    }
+    Optional<UserProfile> findByUser(User user);
+
+    //I created this
+    @Query("select userProfile from UserProfile userProfile left join fetch userProfile.user where userProfile.user =:user")
+    Optional<UserProfile> findOneWithToOneRelationshipsByUser(@Param("user") User user);
+
+    default Optional<UserProfile> fetchBagRelationshipsByUser(Optional<UserProfile> userProfile) {
+        return userProfile.flatMap(profile -> this.findByUser(profile.getUser()));
+    }
+
+    default Optional<UserProfile> findOneWithEagerRelationshipsByUser(User user) {
+        return this.fetchBagRelationshipsByUser(this.findOneWithToOneRelationshipsByUser(user));
+    }
 }

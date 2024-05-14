@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -89,19 +90,13 @@ public class UserProfileRepositoryWithBagRelationshipsImpl implements UserProfil
         return result;
     }
     //I created this
-    //    @Override
-    //    public Optional<UserProfile> fetchBagRelationshipsByUser(Optional<UserProfile> userProfile) {
-    //        return userProfile.flatMap(userProfile -> {
-    //            return Optional.ofNullable(userProfileRepository.findByUser(userProfile.getUser()));
-    //        });
-    //    }
 
-    //    public UserProfile<UserProfile> grabUser(UserProfile userProfile) {
-    //        for (int i = 0; i < userProfileRepository.findAll(); i++) {
-    //            if(userProfile.equals(i))
-    //                return userProfile;
+    //        public UserProfile<UserProfile> grabUser(UserProfile userProfile) {
+    //            for (int i = 0; i < userProfileRepository.findAll(); i++) {
+    //                if(userProfile.equals(i))
+    //                    return userProfile;
+    //            }
+    //            return null;
     //        }
-    //        return null;
-    //    }
 
 }
