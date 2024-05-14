@@ -140,6 +140,7 @@ const handleLogin = (event) => {
 
 
     return (
+        
         <div className={`wrapper${loginAction}`}>
             <div className="form-box login">
                 <form action="" onSubmit={handleLogin}>
@@ -176,6 +177,7 @@ const handleLogin = (event) => {
                     </div>
                 </form>
             </div>
+            
 
             <div className={`form-box register${registerAction}`}>
                 <form onSubmit={handleRegisterSubmit}>
