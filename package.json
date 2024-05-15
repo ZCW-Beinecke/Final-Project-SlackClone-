@@ -75,6 +75,7 @@
     "@reduxjs/toolkit": "2.2.3",
     "axios": "1.6.8",
     "bootstrap": "5.3.3",
+    "crypto-browserify": "^3.12.0",
     "dayjs": "1.11.10",
     "lodash": "4.17.21",
     "path-browserify": "1.0.1",
