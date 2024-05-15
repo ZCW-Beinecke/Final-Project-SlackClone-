@@ -31,9 +31,9 @@ public class Message implements Serializable {
     private Integer pinned;
 
     @Column(name = "timestamp")
-    private Integer timestamp;
+    private Long timestamp;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonIgnoreProperties(value = { "workspace", "messages", "members" }, allowSetters = true)
     private Channel channel;
 
@@ -87,16 +87,16 @@ public class Message implements Serializable {
         this.pinned = pinned;
     }
 
-    public Integer getTimestamp() {
+    public Long getTimestamp() {
         return this.timestamp;
     }
 
-    public Message timestamp(Integer timestamp) {
+    public Message timestamp(Long timestamp) {
         this.setTimestamp(timestamp);
         return this;
     }
 
-    public void setTimestamp(Integer timestamp) {
+    public void setTimestamp(Long timestamp) {
         this.timestamp = timestamp;
     }
 

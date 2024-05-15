@@ -24,6 +24,21 @@ const Chat = () => {
       // Emit a 'join_room' event to the server with the room number.
       socket.emit('join_room', room);
       const token = localStorage.getItem('token');
+      const users = await fetch(`http://localhost:8080/api/admin/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!users.ok) {
+        throw new Error(`HTTP error! status: ${users.status}`);
+      }
+      const usersArray = await users.json();
+      const usersMap = {};
+
+      usersArray.forEach(user => {
+        usersMap[user.id] = user.login;
+      });
+
       const response = await fetch(`http://localhost:8080/api/messages/channel/${room}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -33,10 +48,10 @@ const Chat = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const oldMessages = await response.json();
-      // console.log(oldMessages);
+      console.log(oldMessages);
       const formattedOldMessages = oldMessages.map(msg => ({
         message: msg.uploads, // replace 'messageText' with the actual property name in the old message object
-        author: msg.userProfile.id, // replace 'author' with the actual property name in the old message object
+        author: usersMap[msg.userProfile.id], // replace 'author' with the actual property name in the old message object
         timestamp: msg.timestamp, // replace 'timestamp' with the actual property name in the old message object
       }));
       setMessages(prevMessages => [...prevMessages, ...formattedOldMessages]);
@@ -74,7 +89,7 @@ const Chat = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-     
+
         body: JSON.stringify({
           uploads: messageText.trim(),
           timestamp: timestamp,

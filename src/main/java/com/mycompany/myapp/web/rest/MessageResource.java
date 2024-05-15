@@ -177,4 +177,10 @@ public class MessageResource {
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
     }
+
+    @GetMapping("/channel/{channelId}")
+    public ResponseEntity<List<Message>> getMessagesByChannel(@PathVariable Long channelId) {
+        List<Message> messages = messageRepository.findByChannelId(channelId);
+        return ResponseEntity.ok().body(messages);
+    }
 }

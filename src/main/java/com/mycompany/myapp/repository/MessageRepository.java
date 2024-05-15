@@ -1,6 +1,7 @@
 package com.mycompany.myapp.repository;
 
 import com.mycompany.myapp.domain.Message;
+import java.util.List;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface MessageRepository extends JpaRepository<Message, Long> {}
+public interface MessageRepository extends JpaRepository<Message, Long> {
+    List<Message> findByChannelId(Long channelId);
+}
