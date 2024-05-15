@@ -3,6 +3,7 @@ import { FaHeadset, FaUserPlus } from 'react-icons/fa';
 import Messages from './Messages';
 // Library for real-time bidirectional event-based communication.
 import io from 'socket.io-client';
+let currentChannelName = '';
 
 // Establishes a connection to a Socket.IO server running locally on port 9000.
 const socket = io.connect('http://localhost:9000');
@@ -16,79 +17,128 @@ const Chat = () => {
 
   // State variable to hold an array of messages.
   const [messages, setMessages] = useState([]);
-
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-  //   const storedJWT = localStorage.getItem('token');
-  //   try {
-  //     const response = await fetch('http://localhost:8080/api/messages', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${storedJWT}`,
-  //       },
-  //       body: JSON.stringify({ message: messageText }), // Changed "uploads" to "message"
-  //     });
-  //     if (!response.ok) {
-  //       throw new Error('Error sending message');
-  //     }
-  //     setMessageText('');
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     // Handle the error (display a message to the user)
-  //   }
-  // };
-
   // Function to join a room.
-  const joinRoom = () => {
+  const joinRoom = async (roomNo, roomName) => {
+    setRoom(roomNo);
     if (room.trim() !== '') {
-    console.log(localStorage.getItem('authenticatedUsername'))
+      currentChannelName = roomName;
+      console.log(localStorage.getItem('authenticatedUsername'));
       // Emit a 'join_room' event to the server with the room number.
       socket.emit('join_room', room);
-    } else {
-      alert('Please enter a room number.');
+      const token = localStorage.getItem('token');
+      const users = await fetch(`http://localhost:8080/api/admin/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!users.ok) {
+        throw new Error(`HTTP error! status: ${users.status}`);
+      }
+      const usersArray = await users.json();
+      const usersMap = {};
+
+      usersArray.forEach(user => {
+        usersMap[user.id] = user.login;
+      });
+
+      const response = await fetch(`http://localhost:8080/api/messages/channel/${room}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const oldMessages = await response.json();
+      console.log(oldMessages);
+      const formattedOldMessages = oldMessages.map(msg => ({
+        message: msg.uploads, // replace 'messageText' with the actual property name in the old message object
+        author: usersMap[msg.userProfile.id], // replace 'author' with the actual property name in the old message object
+        timestamp: msg.timestamp, // replace 'timestamp' with the actual property name in the old message object
+      }));
+      setMessages(prevMessages => [...prevMessages, ...formattedOldMessages]);
+      // } else {
+      //   alert('Please enter a room number.');
     }
   };
 
-// Function to send a message.
-const sendMessage = () => {
-  if (messageText.trim() !== '') {
-    const author = localStorage.getItem('authenticatedUsername');
-    const timestamp = Date.now(); // Current timestamp in milliseconds
-    // Emit a 'send_message' event to the server with the message, author, timestamp, and room number.
-    socket.emit('send_message', { message: messageText.trim(), author, timestamp, room });
-    setMessages(prevMessages => [...prevMessages, { message: messageText.trim(), author, timestamp }]);
-    // Clear the input after sending the message.
-    setMessageText('');
-  } else {
-    alert('Please enter a message.');
-  }
-};
+  // Function to send a message.
+  const sendMessage = async () => {
+    if (messageText.trim() !== '') {
+      const author = localStorage.getItem('authenticatedUsername');
+      const token = localStorage.getItem('token');
 
-// useEffect hook to listen for 'receive_message' events from the server.
+      const response1 = await fetch(`http://localhost:8080/api/admin/users/${author}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response1.ok) {
+        throw new Error(`HTTP error! status: ${response1.status}`);
+      }
+      const authorData = await response1.json();
+      console.debug(authorData);
+      const userID = authorData.id;
+
+      const timestamp = Date.now(); // Current timestamp in milliseconds
+      // Emit a 'send_message' event to the server with the message, author, timestamp, and room number.
+      socket.emit('send_message', { message: messageText.trim(), author, timestamp, room });
+      // Post the message to the db
+      // const token = localStorage.getItem('token'); //duplicate
+      let roomint = Number(room);
+      const response = await fetch('http://localhost:8080/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+
+        body: JSON.stringify({
+          uploads: messageText.trim(),
+          timestamp: timestamp,
+          pinned: 0,
+          channel: {
+            id: roomint,
+          },
+          userProfile: {
+            id: userID,
+          },
+        }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      setMessages(prevMessages => [...prevMessages, { message: messageText.trim(), author, timestamp }]);
+      // Clear the input after sending the message.
+      setMessageText('');
+    } else {
+      alert('Please enter a message.');
+    }
+  };
+
+  // useEffect hook to listen for 'receive_message' events from the server.
   useEffect(() => {
     // Function to handle received messages.
     const handleReceiveMessage = data => {
       const { message, author, timestamp } = data;
-      console.log("Received Message:", { message, author, timestamp });
+      console.log('Received Message:', { message, author, timestamp });
       setMessages(prevMessages => [...prevMessages, { message, author, timestamp }]);
     };
-// Listen for 'receive_message' events.
+    // Listen for 'receive_message' events.
     socket.on('receive_message', handleReceiveMessage);
-      console.log(handleReceiveMessage);
+    console.log(handleReceiveMessage);
 
-// Clean up the event listener when the component is unmounted.
+    // Clean up the event listener when the component is unmounted.
     return () => {
       socket.off('receive_message', handleReceiveMessage);
-            console.log(handleReceiveMessage);
-
+      console.log(handleReceiveMessage);
     };
   }, []);
 
   return (
     <div className="chat">
       <div className="chatInfo">
-        <span>Jane</span>
+        <span>{currentChannelName}</span>
         <div className="chatIcons">
           <FaHeadset />
           <FaUserPlus />
@@ -96,13 +146,13 @@ const sendMessage = () => {
       </div>
       <Messages messages={messages} />
       <div className="input">
-        <input
+        {/* <input
           placeholder="Room Number..."
           onChange={event => {
             setRoom(event.target.value);
           }}
-        />
-        <button onClick={joinRoom}>Join Room</button>
+        /> */}
+        <button onClick={() => joinRoom('1', 'General')}>Join Room</button>
         <input
           type="text"
           placeholder="Type something"
