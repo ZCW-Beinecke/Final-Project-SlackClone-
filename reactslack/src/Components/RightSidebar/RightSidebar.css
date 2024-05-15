@@ -71,6 +71,7 @@
   margin-bottom: 10px;
   cursor: pointer;
   font-weight: normal; /* Reset font weight to normal for all list items */
+  font-size: 30px;
 }
 .right-sidebar-tabs {
   border-bottom: 1px solid #fff; /* Add a thin white horizontal line below the tabs */
