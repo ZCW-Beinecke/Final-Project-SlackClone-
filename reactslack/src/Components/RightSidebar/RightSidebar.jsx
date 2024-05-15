@@ -18,7 +18,7 @@ const RightSidebar = () => {
   useEffect(() => {
     const fetchUserProfilePicture = async () => {
       try {
-        const url = await fetchUserProfilePicture(); // Replace with your logic to fetch URL
+        const url = ''; //await fetchUserProfilePicture(); // Replace with your logic to fetch URL
         setProfilePictureUrl(url);
       } catch (err) {
         console.error('Error fetching profile picture:', err);

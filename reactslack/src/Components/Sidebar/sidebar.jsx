@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import './sidebar.css';
-
 const Sidebar = () => {
   // Dummy data for channels (replace with actual data)
   const [channels, setChannels] = useState([
     { id: 1, name: 'General' },
   ]);
-
   const [privateChats, setPrivateChats] = useState([]);
-
   const [newChannelName, setNewChannelName] = useState("");
   const [newPrivateChatName, setNewPrivateChatName] = useState("");
-
   const handleAddChannel = () => {
     if (newChannelName.trim() === "") {
       return;
@@ -23,7 +19,6 @@ const Sidebar = () => {
     setChannels([...channels, newChannel]);
     setNewChannelName("");
   };
-
   const handleAddPrivateChat = () => {
     if (newPrivateChatName.trim() === "") {
       return;
@@ -35,17 +30,14 @@ const Sidebar = () => {
     setPrivateChats([...privateChats, newPrivateChat]);
     setNewPrivateChatName("");
   };
-
   const handleDeleteChannel = (channelId) => {
     const updatedChannels = channels.filter(channel => channel.id !== channelId);
     setChannels(updatedChannels);
   };
-
   const handleDeletePrivateChat = (chatId) => {
     const updatedPrivateChats = privateChats.filter(chat => chat.id !== chatId);
     setPrivateChats(updatedPrivateChats);
   };
-
   return (
     <div className="sidebar">
       <h1>Table Talk</h1>
@@ -68,9 +60,7 @@ const Sidebar = () => {
         />
         <button onClick={handleAddChannel}>+</button>
       </div>
-
       {/* Private Chats Section */}
-      
       <h2>Direct Messages</h2>
       <ul>
         {/* Render list of private chats */}
@@ -82,7 +72,6 @@ const Sidebar = () => {
         ))}
       </ul>
       <div className="add-channel">
-
         <input
           type="text"
           placeholder="Enter direct message"
@@ -93,8 +82,5 @@ const Sidebar = () => {
       </div>
     </div>
   );
-  
 }
-
 export default Sidebar;
-
