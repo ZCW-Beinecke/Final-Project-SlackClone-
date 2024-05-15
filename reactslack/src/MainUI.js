@@ -14,11 +14,13 @@ function MainUI() {
   };
 
   return (
-    <>
+    <div className="container">
+      {' '}
+      {/* Wrap your entire app content */}
       <Router>
         <Rightsidebar />
         <Sidebar />
-        <channels />
+        {/* <channels /> */}
         <SearchBar onSearch={handleSearch} />
         <Container>
           <Routes>
@@ -27,25 +29,6 @@ function MainUI() {
           </Routes>
         </Container>
       </Router>
-    </>
-  );
-}
-function Rightsidebar() {
-  // ... Your Rightsidebar component code
-
-  return (
-    <div className="right-sidebar">
-      <h2>Right Navigation</h2>
-      <ul>
-        <li>
-          <Link to="/">
-            {' '}
-            {/* Wrap the button with Link and specify path "/" */}
-            Home
-          </Link>
-        </li>
-        {/* Other navigation links */}
-      </ul>
     </div>
   );
 }

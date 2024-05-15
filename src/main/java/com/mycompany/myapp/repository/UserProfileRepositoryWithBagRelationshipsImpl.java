@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -88,4 +89,14 @@ public class UserProfileRepositoryWithBagRelationshipsImpl implements UserProfil
         Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
         return result;
     }
+    //I created this
+
+    //        public UserProfile<UserProfile> grabUser(UserProfile userProfile) {
+    //            for (int i = 0; i < userProfileRepository.findAll(); i++) {
+    //                if(userProfile.equals(i))
+    //                    return userProfile;
+    //            }
+    //            return null;
+    //        }
+
 }

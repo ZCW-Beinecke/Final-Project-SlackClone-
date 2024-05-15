@@ -1,0 +1,11 @@
+.message {
+  display: flex;
+  flex-direction: column;
+}
+
+.messageContent {
+  padding: 5px;
+}
+
+.messageInfo {
+}

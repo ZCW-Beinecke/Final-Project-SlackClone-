@@ -10,19 +10,13 @@
     "prettier",
     "eslint-config-prettier"
   ],
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "project": ["./tsconfig.json", "./tsconfig.test.json"]
-  },
+
   "settings": {
     "react": {
       "version": "detect"
     }
   },
+
   "rules": {
     "@typescript-eslint/member-ordering": [
       "error",
@@ -74,6 +68,11 @@
     "complexity": ["error", 40],
     "no-invalid-this": "off",
     "react/prop-types": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "no-undef": [
+      // Update this rule
+      "error",
+      { "typeof": [] } // Allow variables defined using useState or other hooks
+    ]
   }
 }

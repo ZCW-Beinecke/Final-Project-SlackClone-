@@ -1,6 +1,6 @@
 import React from 'react';
 import Message from './Message';
-
+import './messages.css'; // Import the CSS file
 
 const Messages = ({ messages }) => {
   // If there are no messages, display a message
@@ -9,10 +9,9 @@ const Messages = ({ messages }) => {
   }
 
   return (
-    // Loop through the messages and display them
+    // Loop through the messages and display them using the Message component
     <div className="messages">
       {messages.map((msg, index) => (
-        // Pass the message
         <Message key={index} msg={msg} />
       ))}
     </div>

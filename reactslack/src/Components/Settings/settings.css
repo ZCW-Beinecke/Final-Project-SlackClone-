@@ -1,0 +1,55 @@
+/* Base styles */
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.settings-page {
+  display: flex; /* Arrange settings and content side-by-side */
+  width: 100vw; /* Take up full viewport width */
+  min-height: 100vh; /* Cover full viewport height */
+}
+
+/* Settings section */
+.settings-section {
+  width: 250px; /* Set width for settings section */
+  background-color: #f0f0f0; /* Light gray background */
+  border-right: 1px solid #ddd; /* Border between settings and content */
+  padding: 20px; /* Padding for content within settings section */
+}
+
+.settings-title {
+  font-weight: bold;
+  margin-bottom: 10px; /* Space between title and settings */
+}
+
+.settings-list {
+  list-style: none; /* Remove default bullet points */
+  padding: 0; /* Reset default padding */
+  margin: 0; /* Reset default margin */
+}
+
+.settings-list li {
+  margin-bottom: 10px; /* Space between settings items */
+}
+
+.settings-link {
+  text-decoration: none; /* Remove underline from links */
+  color: #333; /* Text color for settings links */
+}
+
+.settings-link:hover {
+  color: #007bff; /* Change color on hover */
+}
+
+/* Content section */
+.content-section {
+  flex: 1; /* Take up remaining space */
+  padding: 20px; /* Padding for content */
+}
+
+.content-heading {
+  font-weight: bold;
+  margin-bottom: 10px; /* Space between heading and content */
+}

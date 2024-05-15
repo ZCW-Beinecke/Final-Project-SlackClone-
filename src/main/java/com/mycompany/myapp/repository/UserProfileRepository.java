@@ -1,5 +1,6 @@
 package com.mycompany.myapp.repository;
 
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.domain.UserProfile;
 import java.util.List;
 import java.util.Optional;
@@ -40,4 +41,18 @@ public interface UserProfileRepository extends UserProfileRepositoryWithBagRelat
 
     @Query("select userProfile from UserProfile userProfile left join fetch userProfile.user where userProfile.id =:id")
     Optional<UserProfile> findOneWithToOneRelationships(@Param("id") Long id);
+
+    Optional<UserProfile> findByUser(User user);
+
+    //I created this
+    @Query("select userProfile from UserProfile userProfile left join fetch userProfile.user where userProfile.user =:user")
+    Optional<UserProfile> findOneWithToOneRelationshipsByUser(@Param("user") User user);
+
+    default Optional<UserProfile> fetchBagRelationshipsByUser(Optional<UserProfile> userProfile) {
+        return userProfile.flatMap(profile -> this.findByUser(profile.getUser()));
+    }
+
+    default Optional<UserProfile> findOneWithEagerRelationshipsByUser(User user) {
+        return this.fetchBagRelationshipsByUser(this.findOneWithToOneRelationshipsByUser(user));
+    }
 }

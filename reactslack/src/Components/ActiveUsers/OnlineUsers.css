@@ -1,0 +1,16 @@
+.online-users-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.user-card {
+  width: calc(20% - 10px); /* Adjust width for 5 columns with margins */
+  margin: 5px;
+  text-align: center;
+}
+
+.user-card img {
+  width: 100%;
+  border-radius: 50%; /* For circular profile pictures */
+}

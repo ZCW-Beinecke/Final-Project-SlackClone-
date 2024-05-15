@@ -1,0 +1,9 @@
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 1px; /* Adjust the value to reduce or increase the spacing between messages */
+}
+
+.messages p {
+  margin: 0; /* Remove any default margin on paragraphs inside the messages container */
+}
