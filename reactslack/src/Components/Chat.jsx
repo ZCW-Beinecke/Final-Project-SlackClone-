@@ -40,48 +40,81 @@ const Chat = () => {
   // };
 
   // Function to join a room.
-  const joinRoom = () => {
+  const joinRoom = async () => {
     if (room.trim() !== '') {
-    console.log(localStorage.getItem('authenticatedUsername'))
+      console.log(localStorage.getItem('authenticatedUsername'));
       // Emit a 'join_room' event to the server with the room number.
       socket.emit('join_room', room);
+      const token = localStorage.getItem('token');
+      const response = await fetch(`http://localhost:8080/api/messages/channel/${room}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const oldMessages = await response.json();
+      // console.log(oldMessages);
+      const formattedOldMessages = oldMessages.map(msg => ({
+        message: msg.uploads, // replace 'messageText' with the actual property name in the old message object
+        author: msg.userProfile.id, // replace 'author' with the actual property name in the old message object
+        timestamp: msg.timestamp, // replace 'timestamp' with the actual property name in the old message object
+      }));
+      setMessages(prevMessages => [...prevMessages, ...formattedOldMessages]);
     } else {
       alert('Please enter a room number.');
     }
   };
 
-// Function to send a message.
-const sendMessage = () => {
-  if (messageText.trim() !== '') {
-    const author = localStorage.getItem('authenticatedUsername');
-    const timestamp = Date.now(); // Current timestamp in milliseconds
-    // Emit a 'send_message' event to the server with the message, author, timestamp, and room number.
-    socket.emit('send_message', { message: messageText.trim(), author, timestamp, room });
-    setMessages(prevMessages => [...prevMessages, { message: messageText.trim(), author, timestamp }]);
-    // Clear the input after sending the message.
-    setMessageText('');
-  } else {
-    alert('Please enter a message.');
-  }
-};
+  // Function to send a message.
+  const sendMessage = async () => {
+    if (messageText.trim() !== '') {
+      const author = localStorage.getItem('userId');
+      const timestamp = Date.now(); // Current timestamp in milliseconds
+      // Emit a 'send_message' event to the server with the message, author, timestamp, and room number.
+      socket.emit('send_message', { message: messageText.trim(), author, timestamp, room });
+      // Post the message to the db
+      const token = localStorage.getItem('token');
+      const response = await fetch('http://localhost:8080/api/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          message: messageText.trim(),
+          author: author,
+          timestamp: timestamp,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      setMessages(prevMessages => [...prevMessages, { message: messageText.trim(), author, timestamp }]);
+      // Clear the input after sending the message.
+      setMessageText('');
+    } else {
+      alert('Please enter a message.');
+    }
+  };
 
-// useEffect hook to listen for 'receive_message' events from the server.
+  // useEffect hook to listen for 'receive_message' events from the server.
   useEffect(() => {
     // Function to handle received messages.
     const handleReceiveMessage = data => {
       const { message, author, timestamp } = data;
-      console.log("Received Message:", { message, author, timestamp });
+      console.log('Received Message:', { message, author, timestamp });
       setMessages(prevMessages => [...prevMessages, { message, author, timestamp }]);
     };
-// Listen for 'receive_message' events.
+    // Listen for 'receive_message' events.
     socket.on('receive_message', handleReceiveMessage);
-      console.log(handleReceiveMessage);
+    console.log(handleReceiveMessage);
 
-// Clean up the event listener when the component is unmounted.
+    // Clean up the event listener when the component is unmounted.
     return () => {
       socket.off('receive_message', handleReceiveMessage);
-            console.log(handleReceiveMessage);
-
+      console.log(handleReceiveMessage);
     };
   }, []);
 
