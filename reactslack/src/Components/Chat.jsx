@@ -4,6 +4,7 @@ import Messages from './Messages';
 // Library for real-time bidirectional event-based communication.
 import io from 'socket.io-client';
 import { channel } from 'diagnostics_channel';
+let currentChannelName="";
 
 // Establishes a connection to a Socket.IO server running locally on port 9000.
 const socket = io.connect('http://localhost:9000');
@@ -18,8 +19,10 @@ const Chat = () => {
   // State variable to hold an array of messages.
   const [messages, setMessages] = useState([]);
   // Function to join a room.
-  const joinRoom = async () => {
+  const joinRoom = async (roomNo, roomName) => {
+    setRoom(roomNo);
     if (room.trim() !== '') {
+      currentChannelName=roomName;
       console.log(localStorage.getItem('authenticatedUsername'));
       // Emit a 'join_room' event to the server with the room number.
       socket.emit('join_room', room);
@@ -55,8 +58,8 @@ const Chat = () => {
         timestamp: msg.timestamp, // replace 'timestamp' with the actual property name in the old message object
       }));
       setMessages(prevMessages => [...prevMessages, ...formattedOldMessages]);
-    } else {
-      alert('Please enter a room number.');
+    // } else {
+    //   alert('Please enter a room number.');
     }
   };
 
@@ -135,7 +138,7 @@ const Chat = () => {
   return (
     <div className="chat">
       <div className="chatInfo">
-        <span>Jane</span>
+        <span>{currentChannelName}</span>
         <div className="chatIcons">
           <FaHeadset />
           <FaUserPlus />
@@ -143,13 +146,13 @@ const Chat = () => {
       </div>
       <Messages messages={messages} />
       <div className="input">
-        <input
+        {/* <input
           placeholder="Room Number..."
           onChange={event => {
             setRoom(event.target.value);
           }}
-        />
-        <button onClick={joinRoom}>Join Room</button>
+        /> */}
+        <button onClick={()=> joinRoom("1","General")}>Join Room</button>
         <input
           type="text"
           placeholder="Type something"
