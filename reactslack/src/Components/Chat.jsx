@@ -3,6 +3,7 @@ import { FaHeadset, FaUserPlus } from 'react-icons/fa';
 import Messages from './Messages';
 // Library for real-time bidirectional event-based communication.
 import io from 'socket.io-client';
+import { channel } from 'diagnostics_channel';
 
 // Establishes a connection to a Socket.IO server running locally on port 9000.
 const socket = io.connect('http://localhost:9000');
@@ -16,29 +17,6 @@ const Chat = () => {
 
   // State variable to hold an array of messages.
   const [messages, setMessages] = useState([]);
-
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-  //   const storedJWT = localStorage.getItem('token');
-  //   try {
-  //     const response = await fetch('http://localhost:8080/api/messages', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${storedJWT}`,
-  //       },
-  //       body: JSON.stringify({ message: messageText }), // Changed "uploads" to "message"
-  //     });
-  //     if (!response.ok) {
-  //       throw new Error('Error sending message');
-  //     }
-  //     setMessageText('');
-  //   } catch (error) {
-  //     console.error('Error:', error);
-  //     // Handle the error (display a message to the user)
-  //   }
-  // };
-
   // Function to join a room.
   const joinRoom = async () => {
     if (room.trim() !== '') {
@@ -70,22 +48,43 @@ const Chat = () => {
   // Function to send a message.
   const sendMessage = async () => {
     if (messageText.trim() !== '') {
-      const author = localStorage.getItem('userId');
+      const author = localStorage.getItem('authenticatedUsername');
+      const token = localStorage.getItem('token');
+
+      const response1 = await fetch(`http://localhost:8080/api/admin/users/${author}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response1.ok) {
+        throw new Error(`HTTP error! status: ${response1.status}`);
+      }
+      const authorData = await response1.json();
+      console.debug(authorData);
+      const userID = authorData.id;
+
       const timestamp = Date.now(); // Current timestamp in milliseconds
       // Emit a 'send_message' event to the server with the message, author, timestamp, and room number.
       socket.emit('send_message', { message: messageText.trim(), author, timestamp, room });
       // Post the message to the db
-      const token = localStorage.getItem('token');
+      // const token = localStorage.getItem('token'); //duplicate
       const response = await fetch('http://localhost:8080/api/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
+     
         body: JSON.stringify({
-          message: messageText.trim(),
-          author: author,
+          uploads: messageText.trim(),
           timestamp: timestamp,
+          pinned: 0,
+          channel: {
+            id: room,
+          },
+          userProfile: {
+            id: userID,
+          },
         }),
       });
       if (!response.ok) {

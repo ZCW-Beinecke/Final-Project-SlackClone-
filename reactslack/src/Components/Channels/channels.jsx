@@ -7,6 +7,7 @@ import "./Channels.css";
 import './Sidebar/sidebar';
 import { Menu, Icon, Modal, Button, Form, Segment, Checkbox } from "semantic-ui-react";
 
+
 const Channels = (props) => {
   const [modalOpenState, setModalOpenState] = useState(false);
   const [channelAddState, setChannelAddState] = useState({
@@ -233,8 +234,8 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 
-export default (mapStateToProps, mapDispatchToProps)(Channels);
+// export default (mapStateToProps, mapDispatchToProps)(Channels);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Channels);
-//ethan
+
 
